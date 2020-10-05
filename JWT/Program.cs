@@ -23,7 +23,8 @@ namespace JWT
 
             string audience = "https://appleid.apple.com";
             string issuer = ""; //team 
-            string subject = ""; //service
+            string subject = ""; //service identifier
+            string kid = ""; //service key
             string p8key = ""; //key
 
             IList<Claim> claims = new List<Claim> {
@@ -45,6 +46,8 @@ namespace JWT
                 DateTime.Now.AddDays(180),
                 signingCred
             );
+            token.Header.Add("kid", kid);
+            token.Header.Remove("typ");
 
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
 
